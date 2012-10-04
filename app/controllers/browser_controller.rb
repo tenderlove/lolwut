@@ -42,8 +42,8 @@ class BrowserController < ApplicationController
 
     # Watch the filesystem for changes
     fsevent = FSEvent.new
-    fsevent.watch(File.join(Rails.root, 'app', 'views')) { |dir|
-
+    paths   = ['views', 'assets'].map { |d| File.join(Rails.root, 'app', d) }
+    fsevent.watch(paths) { |dir|
       # When something changes, send an SSE
       sse.write({ 'changed' => dir }, :event => 'reload')
     }
