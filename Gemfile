@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails',     path: '/Users/aaron/git/rails'
+gem 'rails',     github: 'rails/rails'
 gem 'journey',   github: 'rails/journey'
 gem 'arel',      github: 'rails/arel'
 gem 'activerecord-deprecated_finders', github: 'rails/activerecord-deprecated_finders'
@@ -8,6 +8,8 @@ gem 'activerecord-deprecated_finders', github: 'rails/activerecord-deprecated_fi
 gem 'sqlite3'
 gem 'puma'
 gem 'rb-fsevent'
+gem 'redis'
+gem 'tusk'
 
 # Gems used only for assets and not required
 # in production environments by default.
