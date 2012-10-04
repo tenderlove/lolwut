@@ -13,3 +13,14 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+
+jQuery(document).ready(function() {
+  setTimeout(function() {
+    var source = new EventSource('/control');
+
+    // if we get a reload command, reload the page
+    source.addEventListener('reload', function(e) {
+      window.location.reload();
+    });
+  }, 1);
+});
