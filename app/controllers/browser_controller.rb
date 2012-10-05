@@ -27,6 +27,7 @@ class BrowserController < ApplicationController
     end
 
     def close
+      Rails.logger.info "Closing SSE"
       @io.close
     end
   end
@@ -40,18 +41,23 @@ class BrowserController < ApplicationController
     watch_tables
 
     # Watch the filesystem for changes
-    fsevent = FSEvent.new
+    @fsevent = FSEvent.new
     paths   = ['views', 'assets'].map { |d| File.join(Rails.root, 'app', d) }
-    fsevent.watch(paths) { |dir|
+    @fsevent.watch(paths) { |dir|
       # When something changes, send an SSE
       @sse.write({ 'changed' => dir }, :event => 'reload')
     }
-    fsevent.run
+    @fsevent.run
   ensure
     @sse.close
   end
 
   private
+  
+  def cleanup
+    logger.info "Cleaning up FSEvent"
+    @fsevent.stop
+  end
 
   TableChannel = Struct.new(:channel) do
     include Tusk::Observable::DRb
@@ -81,6 +87,7 @@ class BrowserController < ApplicationController
           sleep 1
         end
       rescue IOError
+        cleanup
       end
     end
   end
