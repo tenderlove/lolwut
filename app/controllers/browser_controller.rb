@@ -27,7 +27,7 @@ class BrowserController < ApplicationController
     end
 
     def close
-      logger.info "Closing SSE"
+      Rails.logger.info "Closing SSE"
       @io.close
     end
   end
