@@ -1,4 +1,3 @@
-require 'rb-fsevent'
 require 'tusk/observable/drb'
 
 # Start the DRb server for notifications
@@ -41,13 +40,16 @@ class BrowserController < ApplicationController
     watch_tables
 
     # Watch the filesystem for changes
-    @fsevent = FSEvent.new
     paths   = ['views', 'assets'].map { |d| File.join(Rails.root, 'app', d) }
-    @fsevent.watch(paths) { |dir|
+    @listener = Listen::MultiListener.new(*paths)
+    @listener.latency(0.5)
+    @listener.change do |modified, added, removed|
       # When something changes, send an SSE
-      @sse.write({ 'changed' => dir }, :event => 'reload')
-    }
-    @fsevent.run
+      modified.each do |modification|
+        @sse.write({ 'changed' => modification }, :event => 'reload')
+      end
+    end
+    @listener.start
   ensure
     @sse.close
   end
@@ -55,8 +57,8 @@ class BrowserController < ApplicationController
   private
   
   def cleanup
-    logger.info "Cleaning up FSEvent"
-    @fsevent.stop
+    logger.info "Cleaning up listener"
+    @listener.stop
   end
 
   TableChannel = Struct.new(:channel) do
