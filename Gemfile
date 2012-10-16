@@ -12,7 +12,7 @@ gem 'tusk'
 gem 'listen'
 gem 'rb-inotify' if RUBY_PLATFORM.downcase.include?("linux")
 gem 'rb-fsevent' if RUBY_PLATFORM.downcase.include?("darwin")
-gem 'turbolinks'
+gem 'turbolinks', github: 'collin/turbolinks', branch: 'patch-1'
 
 # Gems used only for assets and not required
 # in production environments by default.
