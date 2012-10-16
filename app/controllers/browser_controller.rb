@@ -46,7 +46,12 @@ class BrowserController < ApplicationController
     @listener.change do |modified, added, removed|
       # When something changes, send an SSE
       modified.each do |modification|
-        @sse.write({ 'changed' => modification }, :event => 'reload')
+        event = if modification =~ /stylesheets/
+          'reload-styles'
+        else
+          'reload'
+        end
+        @sse.write({ 'changed' => modification }, :event => event)
       end
     end
     @listener.start
@@ -85,8 +90,8 @@ class BrowserController < ApplicationController
     Thread.new do
       begin
         loop do
+          sleep 5
           @sse.write({ 'ping' => Time.now }, :event => 'ping')
-          sleep 1
         end
       rescue IOError
         cleanup
