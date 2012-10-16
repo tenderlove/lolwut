@@ -154,7 +154,7 @@ DEPENDENCIES
   puma
   rack-cache (~> 1.2)
   rails!
-  rb-fsevent (~> 0.9.1)
+  rb-fsevent
   redis
   sass-rails!
   sprockets-rails!

@@ -10,7 +10,8 @@ gem 'puma'
 gem 'redis'
 gem 'tusk'
 gem 'listen'
-gem 'rb-fsevent', '~> 0.9.1'
+gem 'rb-inotify' if RUBY_PLATFORM.downcase.include?("linux")
+gem 'rb-fsevent' if RUBY_PLATFORM.downcase.include?("darwin")
 gem 'turbolinks'
 
 # Gems used only for assets and not required
