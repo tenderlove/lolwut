@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/collin/turbolinks.git
+  revision: 2e8b320a7e4a7bb6faf7cf73a8fd34d0ed8d9ff3
+  branch: patch-1
+  specs:
+    turbolinks (0.5.1)
+      coffee-rails
+
+GIT
   remote: git://github.com/rails/activerecord-deprecated_finders.git
   revision: fe150f26f009cef370658b7c19db1629b2448952
   specs:
@@ -101,6 +109,7 @@ GEM
       railties (>= 3.1.0, < 5.0)
       thor (~> 0.14)
     json (1.7.5)
+    listen (0.5.2)
     mail (2.4.4)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
@@ -148,6 +157,7 @@ DEPENDENCIES
   coffee-rails!
   journey!
   jquery-rails
+  listen
   puma
   rack-cache (~> 1.2)
   rails!
@@ -156,5 +166,6 @@ DEPENDENCIES
   sass-rails!
   sprockets-rails!
   sqlite3
+  turbolinks!
   tusk
   uglifier (>= 1.0.3)
