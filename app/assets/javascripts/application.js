@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+//= require turbolinks
 
 jQuery(document).ready(function() {
   setTimeout(function() {
@@ -20,7 +21,23 @@ jQuery(document).ready(function() {
 
     // if we get a reload command, reload the page
     source.addEventListener('reload', function(e) {
-      window.location.reload();
+      Turbolinks.visit(window.location);
     });
+
+    // if we get a reload-styles command, reload the css
+    source.addEventListener('reload-styles', function(e) {
+      var sheets = $("[rel=stylesheet]");
+      sheets.each(function() {
+        var sheet = $(this);
+        var clone = sheet.clone()
+        clone.appendTo(document.head);
+        clone.on('load', function() {
+          setTimeout(20, function() {
+            sheet.remove();
+          });
+        });
+      });
+    });
+
   }, 1);
 });
